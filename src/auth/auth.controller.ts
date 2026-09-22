@@ -1,0 +1,156 @@
+import {
+  Body,
+  Controller,
+  Post,
+  Get,
+  UseGuards,
+  Req,
+  Res,
+} from '@nestjs/common';
+
+import { AuthService } from './auth.service';
+
+import { SignupDto } from './dto/signup.dto';
+
+import { LoginDto } from './dto/login.dto';
+
+import { AuthGuard } from '@nestjs/passport';
+
+import type { Response } from 'express';
+
+import { ResetPasswordDto } from './dto/reset-password.dto';
+
+@Controller('auth')
+export class AuthController {
+
+
+  constructor(
+    private authService: AuthService,
+  ) {}
+
+
+
+  // NORMAL SIGNUP
+
+  @Post('signup')
+  signup(
+    @Body() data: SignupDto,
+  ) {
+
+    return this.authService.signup(data);
+
+  }
+
+
+
+
+
+  // NORMAL LOGIN
+
+  @Post('login')
+  login(
+    @Body() data: LoginDto,
+  ) {
+
+    return this.authService.login(
+      data.email,
+      data.password,
+    );
+
+  }
+
+
+
+
+
+  // GOOGLE LOGIN START
+
+  @Get('google')
+  @UseGuards(
+    AuthGuard('google'),
+  )
+  googleLogin() {
+
+  }
+
+
+
+
+
+  // GOOGLE CALLBACK
+
+  @Get('google/callback')
+  @UseGuards(
+    AuthGuard('google'),
+  )
+  async googleCallback(
+    @Req() req:any,
+    @Res() res:Response,
+  ) {
+
+
+    const result =
+      await this.authService.googleLogin(
+        req.user,
+      );
+
+
+
+    // Already subscriber
+
+    if(result.subscribed){
+
+
+      return res.redirect(
+        'http://127.0.0.1:5500/home.html'
+      );
+
+
+    }
+
+
+
+
+
+    // New Google user
+
+    return res.redirect(
+      'http://127.0.0.1:5500/mid-page.html'
+    );
+
+
+  }
+  
+@Post('forgot-password')
+async forgotPassword(
+  @Body('email') email: string
+) {
+  return this.authService.forgotPassword(email);
+}
+@Post('reset-password')
+async resetPassword(
+  @Body() data: ResetPasswordDto,
+) {
+
+  return this.authService.resetPassword(
+    data.token,
+    data.newPassword,
+  );
+
+}
+
+@Post('change-password')
+async changePassword(
+  @Body() data: any,
+) {
+
+  return this.authService.changePassword(
+    data.email,
+    data.currentPassword,
+    data.newPassword,
+  );
+
+}
+
+}
+
