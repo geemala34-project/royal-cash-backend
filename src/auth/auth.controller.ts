@@ -101,8 +101,8 @@ export class AuthController {
     if(result.subscribed){
 
 
-      return res.redirect(
-        'https://royal-cash-tau.vercel.app/home.html?token=${result.accessToken}'
+   return res.redirect(
+  `https://royal-cash-tau.vercel.app/home.html?token=${result.accessToken}`
       );
 
 
@@ -114,8 +114,8 @@ export class AuthController {
 
     // New Google user
 
-    return res.redirect(
-  'https://royal-cash-tau.vercel.app/mid-page.html?google=true&token=${result.accessToken}'
+ return res.redirect(
+  `https://royal-cash-tau.vercel.app/mid-page.html?google=true&token=${result.accessToken}`
 );
 
 
