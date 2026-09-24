@@ -102,7 +102,6 @@ export class AuthController {
 
 
   return res.redirect(
-return res.redirect(
  `https://royal-cash-tau.vercel.app/home.html?token=${result.accessToken}&name=${encodeURIComponent(result.user.name)}&email=${encodeURIComponent(result.user.email)}`
 );
 
