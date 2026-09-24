@@ -102,8 +102,9 @@ export class AuthController {
 
 
   return res.redirect(
- `https://royal-cash-tau.vercel.app/home.html?token=${result.accessToken}&name=${encodeURIComponent(result.user.name)}`
-);
+return res.redirect(
+ `https://royal-cash-tau.vercel.app/home.html?token=${result.accessToken}&name=${encodeURIComponent(result.user.name)}&email=${encodeURIComponent(result.user.email)}`
+););
 
     }
 
@@ -114,7 +115,7 @@ export class AuthController {
     // New Google user
 
 return res.redirect(
- `https://royal-cash-tau.vercel.app/mid-page.html?google=true&token=${result.accessToken}&name=${encodeURIComponent(result.user.name)}`
+ `https://royal-cash-tau.vercel.app/mid-page.html?google=true&token=${result.accessToken}&name=${encodeURIComponent(result.user.name)}&email=${encodeURIComponent(result.user.email)}`
 );
 
 
