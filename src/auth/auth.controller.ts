@@ -151,5 +151,14 @@ async changePassword(
 
 }
 
+
+@Get('me')
+@UseGuards(JwtGuard)
+getMe(@Req() req:any) {
+
+  return req.user;
+
 }
 
+
+}
