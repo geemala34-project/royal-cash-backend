@@ -85,15 +85,23 @@ export class AuthService {
   async login(email:string,password:string){
 
 
-    const user =
-      await this.prisma.user.findUnique({
+ let user =
+  await this.prisma.user.findUnique({
+    where:{
+      email,
+    },
+  });
 
-        where:{
-          email,
-        },
 
-      });
+console.log("EMAIL CHECK:", email);
 
+const allUsers = await this.prisma.user.findMany({
+  where:{
+    email,
+  }
+});
+
+console.log("USERS FOUND:", allUsers);
 
 
     if(!user){
