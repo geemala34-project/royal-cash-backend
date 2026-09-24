@@ -385,7 +385,9 @@ async changePassword(
 
       });
 
-
+console.log("GOOGLE LOGIN USER:", user.email);
+console.log("USER ID:", user.id);
+console.log("FOUND SUBSCRIPTION:", subscription);
 
 
 
