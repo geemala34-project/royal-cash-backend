@@ -150,17 +150,11 @@ console.log("USERS FOUND:", allUsers);
 
 
 
-
-    const token =
-      this.jwtService.sign({
-
-        id:user.id,
-
-        email:user.email,
-
-      });
-
-
+const token = this.jwtService.sign({
+  id: user.id,
+  email: user.email,
+  name: user.name,
+});
 
 
 
