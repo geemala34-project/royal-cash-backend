@@ -20,6 +20,8 @@ import type { Response } from 'express';
 
 import { ResetPasswordDto } from './dto/reset-password.dto';
 
+import { JwtGuard } from './guards/jwt.guard';
+
 @Controller('auth')
 export class AuthController {
 
