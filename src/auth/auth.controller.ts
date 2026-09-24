@@ -115,8 +115,8 @@ export class AuthController {
     // New Google user
 
     return res.redirect(
-      'https://royal-cash-tau.vercel.app/mid-page.html'
-    );
+  'https://royal-cash-tau.vercel.app/mid-page.html?google=true'
+);
 
 
   }
