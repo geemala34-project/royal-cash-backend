@@ -55,17 +55,37 @@ export class AuthService {
 
 
 
-    const user =
-      await this.prisma.user.create({
+ const otp =
+  Math.floor(100000 + Math.random() * 900000).toString();
 
-        data:{
-          name: username,
-          email,
-          password: hashedPassword,
-        },
 
-      });
+const user =
+  await this.prisma.user.create({
 
+    data:{
+
+      name: username,
+
+      email,
+
+      password: hashedPassword,
+
+      verificationOtp: otp,
+
+      verificationOtpExpiry:
+        new Date(Date.now() + 10 * 60 * 1000),
+
+      isVerified: false,
+
+    },
+
+  });
+
+
+await this.mailService.sendVerificationOtp(
+  email,
+  otp,
+);
 
 
     return {
