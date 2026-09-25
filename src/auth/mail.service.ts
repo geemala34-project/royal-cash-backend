@@ -54,42 +54,43 @@ from: 'Royal Cash <Support.royalcash@gmail.com>',
 
         <p>Royal Cash Team</p>
       `
-async sendVerificationOtp(
-  email: string,
-  otp: string,
-) {
-
-  await this.transporter.sendMail({
-
-    from: 'Royal Cash <Support.royalcash@gmail.com>',
-
-    to: email,
-
-    subject: 'Verify Your Royal Cash Account',
-
-    html: `
-
-      <h2>Royal Cash Email Verification</h2>
-
-      <p>Thank you for creating your Royal Cash account.</p>
-
-      <p>Your verification code is:</p>
-
-      <h1>${otp}</h1>
-
-      <p>This code will expire in 10 minutes.</p>
-
-      <br>
-
-      <p>Royal Cash Team</p>
 
     `
 
   });
 
 }
+      async sendVerificationOtp(
+    email: string,
+    otp: string,
+  ) {
+
+    await this.transporter.sendMail({
+
+      from: 'Royal Cash <Support.royalcash@gmail.com>',
+
+      to: email,
+
+      subject: 'Verify Your Royal Cash Account',
+
+      html: `
+
+        <h2>Royal Cash Email Verification</h2>
+
+        <p>Thank you for creating your Royal Cash account.</p>
+
+        <p>Your verification code is:</p>
+
+        <h1>${otp}</h1>
+
+        <p>This code will expire in 10 minutes.</p>
+
+        <br>
+
+        <p>Royal Cash Team</p>
+
+      `
+
     });
 
   }
-
-}
