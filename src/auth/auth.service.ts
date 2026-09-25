@@ -394,15 +394,16 @@ console.log("FOUND SUBSCRIPTION:", subscription);
 
 
 
-    const token =
-      this.jwtService.sign({
+   const token =
+  this.jwtService.sign({
 
-        id:user.id,
+    id:user.id,
 
-        email:user.email,
+    email:user.email,
 
-      });
+    name:user.name,
 
+  });
 
 
 
