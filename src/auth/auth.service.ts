@@ -35,19 +35,45 @@ export class AuthService {
 
 
 
-    const existingUser =
-      await this.prisma.user.findUnique({
-        where:{
-          email,
-        },
-      });
+  const existingUser =
+  await this.prisma.user.findUnique({
+    where:{
+      email,
+    },
+  });
+
+
+if(existingUser){
+
+  throw new Error('Email already exists');
+
+}
 
 
 
-    if(existingUser){
-      throw new Error('Email already exists');
-    }
+// Check pending verification
 
+const existingPending =
+  await this.prisma.pendingVerification.findUnique({
+
+    where:{
+      email,
+    },
+
+  });
+
+
+if(existingPending){
+
+  await this.prisma.pendingVerification.delete({
+
+    where:{
+      email,
+    },
+
+  });
+
+}
 
 
     const hashedPassword =
