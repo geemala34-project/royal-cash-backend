@@ -81,7 +81,7 @@ return {
 
   message:'OTP sent to your email',
 
-  email:user.email,
+  email:pendingUser.email,
 
 };
 
@@ -189,76 +189,7 @@ const token = this.jwtService.sign({
     };
 
   }
-async verifyOtp(
-  email: string,
-  otp: string,
-) {
 
-  const user = await this.prisma.user.findUnique({
-
-    where: {
-      email,
-    },
-
-  });
-
-
-  if (!user) {
-
-    throw new Error('User not found');
-
-  }
-
-
-
-  if (user.verificationOtp !== otp) {
-
-    throw new Error('Invalid OTP');
-
-  }
-
-
-
-  if (
-    !user.verificationOtpExpiry ||
-    user.verificationOtpExpiry < new Date()
-  ) {
-
-    throw new Error('OTP expired');
-
-  }
-
-
-
-  await this.prisma.user.update({
-
-    where: {
-      email,
-    },
-
-    data: {
-
-      isVerified: true,
-
-      verificationOtp: null,
-
-      verificationOtpExpiry: null,
-
-    },
-
-  });
-
-
-
-  return {
-
-    message: 'Account created successfully',
-
-    verified: true,
-
-  };
-
-}
 
   
 async forgotPassword(email: string) {
