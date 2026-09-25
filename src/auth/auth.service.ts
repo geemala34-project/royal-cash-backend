@@ -88,13 +88,13 @@ await this.mailService.sendVerificationOtp(
 );
 
 
-    return {
+return {
 
-      message:'Account created successfully',
+  message:'OTP sent to your email',
 
-      user,
+  email:user.email,
 
-    };
+};
 
   }
 
