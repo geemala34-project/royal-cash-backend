@@ -128,6 +128,19 @@ async forgotPassword(
 ) {
   return this.authService.forgotPassword(email);
 }
+
+@Post('verify-otp')
+async verifyOtp(
+  @Body() data:any,
+) {
+
+  return this.authService.verifyOtp(
+    data.email,
+    data.otp,
+  );
+
+}
+  
 @Post('reset-password')
 async resetPassword(
   @Body() data: ResetPasswordDto,
