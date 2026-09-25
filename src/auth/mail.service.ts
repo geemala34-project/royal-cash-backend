@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import * as nodemailer from 'nodemailer';
-import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class MailService {
@@ -9,15 +8,19 @@ export class MailService {
 
   constructor() {
 
-   this.transporter = nodemailer.createTransport({
-  service: 'gmail',
-  auth: {
-    user: process.env.MAIL_USER,
-    pass: process.env.MAIL_PASSWORD,
-  },
-});
+    this.transporter = nodemailer.createTransport({
+
+      service: 'gmail',
+
+      auth: {
+        user: process.env.MAIL_USER,
+        pass: process.env.MAIL_PASSWORD,
+      },
+
+    });
 
   }
+
 
 
   async sendResetPasswordEmail(
@@ -25,19 +28,23 @@ export class MailService {
     token: string,
   ) {
 
-    const resetLink = `http://127.0.0.1:5500/reset-password.html?token=${token}`;
+    const resetLink =
+      `http://127.0.0.1:5500/reset-password.html?token=${token}`;
 
-console.log("RESET LINK:", resetLink);
+
+    console.log("RESET LINK:", resetLink);
+
 
     await this.transporter.sendMail({
 
-from: 'Royal Cash <Support.royalcash@gmail.com>',
+      from: 'Royal Cash <Support.royalcash@gmail.com>',
 
       to: email,
 
       subject: 'Reset Your Royal Cash Password',
 
       html: `
+
         <h2>Royal Cash Password Reset</h2>
 
         <p>You requested to reset your password.</p>
@@ -53,17 +60,21 @@ from: 'Royal Cash <Support.royalcash@gmail.com>',
         <br>
 
         <p>Royal Cash Team</p>
+
       `
 
-    `
+    });
 
-  });
+  }
 
-}
-      async sendVerificationOtp(
+
+
+
+  async sendVerificationOtp(
     email: string,
     otp: string,
   ) {
+
 
     await this.transporter.sendMail({
 
@@ -94,3 +105,6 @@ from: 'Royal Cash <Support.royalcash@gmail.com>',
     });
 
   }
+
+
+}
