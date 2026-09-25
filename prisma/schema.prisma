@@ -22,15 +22,27 @@ model User {
 
   resetTokenExpiry DateTime?
 
-  verificationOtp String?
-
-  verificationOtpExpiry DateTime?
-
-  isVerified Boolean @default(false)
-
   createdAt DateTime @default(now())
 
   subscription Subscription?
+}
+
+model PendingVerification {
+
+  id Int @id @default(autoincrement())
+
+  name String
+
+  email String @unique
+
+  password String
+
+  otp String
+
+  otpExpiry DateTime
+
+  createdAt DateTime @default(now())
+
 }
 
 model Subscription {
