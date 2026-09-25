@@ -59,26 +59,15 @@ export class AuthService {
   Math.floor(100000 + Math.random() * 900000).toString();
 
 
-const user =
-  await this.prisma.user.create({
-
+const pendingUser =
+  await this.prisma.pendingVerification.create({
     data:{
-
       name: username,
-
       email,
-
       password: hashedPassword,
-
-      verificationOtp: otp,
-
-      verificationOtpExpiry:
-        new Date(Date.now() + 10 * 60 * 1000),
-
-      isVerified: false,
-
+      otp,
+      otpExpiry: new Date(Date.now() + 10 * 60 * 1000),
     },
-
   });
 
 
