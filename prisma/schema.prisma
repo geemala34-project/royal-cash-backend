@@ -22,6 +22,12 @@ model User {
 
   resetTokenExpiry DateTime?
 
+  verificationOtp String?
+
+  verificationOtpExpiry DateTime?
+
+  isVerified Boolean @default(false)
+
   createdAt DateTime @default(now())
 
   subscription Subscription?
