@@ -102,22 +102,28 @@ if(existingPending){
 
 
 }
+else{
 
   pendingUser =
     await this.prisma.pendingVerification.create({
 
       data:{
+
         name: username,
+
         email,
+
         password: hashedPassword,
+
         otp,
+
         otpExpiry: new Date(Date.now() + 10 * 60 * 1000),
+
       },
 
     });
 
 }
-
 
 console.log("GENERATED OTP:", otp);
 
@@ -136,7 +142,8 @@ return {
 
 };
 
-
+}
+  
   async login(email:string,password:string){
 
 
