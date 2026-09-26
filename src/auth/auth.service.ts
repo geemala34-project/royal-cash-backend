@@ -105,16 +105,22 @@ if(existingPending){
 else{
 
 
-const pendingUser =
-  await this.prisma.pendingVerification.create({
-    data:{
-      name: username,
-      email,
-      password: hashedPassword,
-      otp,
-      otpExpiry: new Date(Date.now() + 10 * 60 * 1000),
-    },
-  });
+else {
+
+  pendingUser =
+    await this.prisma.pendingVerification.create({
+
+      data:{
+        name: username,
+        email,
+        password: hashedPassword,
+        otp,
+        otpExpiry: new Date(Date.now() + 10 * 60 * 1000),
+      },
+
+    });
+
+}
 
 
 console.log("GENERATED OTP:", otp);
@@ -130,13 +136,9 @@ return {
 
   message:'OTP sent to your email',
 
-  email:pendingUser.email,
+  email: pendingUser.email,
 
 };
-
-  }
-
-
 
 
 
