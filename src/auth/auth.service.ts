@@ -216,7 +216,58 @@ const token = this.jwtService.sign({
 
   }
 
+async verifyOtp(
+  email: string,
+  otp: string,
+) {
 
+  const pendingUser =
+    await this.prisma.pendingVerification.findUnique({
+      where:{
+        email,
+      },
+    });
+
+
+  if(!pendingUser){
+    throw new Error('Verification request not found');
+  }
+
+
+  if(pendingUser.otp !== otp){
+    throw new Error('Invalid OTP');
+  }
+
+
+  if(pendingUser.otpExpiry < new Date()){
+    throw new Error('OTP expired');
+  }
+
+
+  const user =
+    await this.prisma.user.create({
+      data:{
+        name: pendingUser.name,
+        email: pendingUser.email,
+        password: pendingUser.password,
+      },
+    });
+
+
+  await this.prisma.pendingVerification.delete({
+    where:{
+      email,
+    },
+  });
+
+
+  return {
+    message:'Account created successfully',
+    verified:true,
+    user,
+  };
+
+}
   
 async forgotPassword(email: string) {
 
