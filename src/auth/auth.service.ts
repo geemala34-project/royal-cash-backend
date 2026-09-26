@@ -63,17 +63,6 @@ const existingPending =
   });
 
 
-if(existingPending){
-
-  await this.prisma.pendingVerification.delete({
-
-    where:{
-      email,
-    },
-
-  });
-
-}
 
 
     const hashedPassword =
@@ -85,17 +74,57 @@ if(existingPending){
   Math.floor(100000 + Math.random() * 900000).toString();
 
 
-const pendingUser =
-  await this.prisma.pendingVerification.create({
-    data:{
-      name: username,
-      email,
-      password: hashedPassword,
-      otp,
-      otpExpiry: new Date(Date.now() + 10 * 60 * 1000),
-    },
-  });
+let pendingUser;
 
+
+if(existingPending){
+
+  pendingUser =
+    await this.prisma.pendingVerification.update({
+
+      where:{
+        email,
+      },
+
+      data:{
+
+        name: username,
+
+        password: hashedPassword,
+
+        otp,
+
+        otpExpiry: new Date(Date.now() + 10 * 60 * 1000),
+
+      },
+
+    });
+
+
+}
+else{
+
+
+  pendingUser =
+    await this.prisma.pendingVerification.create({
+
+      data:{
+
+        name: username,
+
+        email,
+
+        password: hashedPassword,
+
+        otp,
+
+        otpExpiry: new Date(Date.now() + 10 * 60 * 1000),
+
+      },
+
+    });
+
+}
 
 await this.mailService.sendVerificationOtp(
   email,
