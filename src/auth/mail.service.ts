@@ -6,7 +6,11 @@ export class MailService {
 
   private transporter;
 
-  constructor() {
+constructor() {
+
+console.log("MAIL USER:", process.env.MAIL_USER);
+console.log("MAIL PASSWORD EXISTS:", !!process.env.MAIL_PASSWORD);
+
 
 this.transporter = nodemailer.createTransport({
 
@@ -17,20 +21,17 @@ this.transporter = nodemailer.createTransport({
   secure: false,
 
   auth: {
-
     user: process.env.MAIL_USER,
-
     pass: process.env.MAIL_PASSWORD,
-
   },
 
   tls: {
-    rejectUnauthorized: false,
+    rejectUnauthorized:false,
   },
 
 });
 
-  }
+}
 
 
 
