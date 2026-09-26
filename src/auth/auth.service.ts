@@ -102,10 +102,6 @@ if(existingPending){
 
 
 }
-else{
-
-
-else {
 
   pendingUser =
     await this.prisma.pendingVerification.create({
