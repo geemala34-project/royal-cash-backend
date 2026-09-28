@@ -128,10 +128,10 @@ else{
 console.log("GENERATED OTP:", otp);
 
 
-// await this.mailService.sendVerificationOtp(
-//   email,
-//   otp,
-// );
+await this.mailService.sendVerificationOtp(
+  email,
+  otp,
+);
 
 
 return {
