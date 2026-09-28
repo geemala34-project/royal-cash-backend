@@ -18,7 +18,6 @@ export class MailService {
     );
   }
 
-
   async sendVerificationOtp(
     email: string,
     otp: string,
@@ -34,49 +33,19 @@ export class MailService {
         subject: 'Verify Your Royal Cash Account',
 
         html: `
-          <div style="
-            font-family: Arial, sans-serif;
-            max-width: 500px;
-            margin: auto;
-            padding: 30px;
-            text-align: center;
-          ">
+          <h2>Royal Cash</h2>
 
-            <h2 style="color:#7b00ff;">
-              Royal Cash
-            </h2>
+          <h3>Verify Your Email</h3>
 
-            <h2>
-              Verify Your Email
-            </h2>
+          <p>Your verification code is:</p>
 
-            <p>
-              Thank you for creating your Royal Cash account.
-            </p>
+          <h1>${otp}</h1>
 
-            <p>
-              Your verification code is:
-            </p>
+          <p>This code will expire in 10 minutes.</p>
 
-            <h1 style="
-              letter-spacing: 8px;
-              color:#ff0088;
-            ">
-              ${otp}
-            </h1>
-
-            <p>
-              This code will expire in 10 minutes.
-            </p>
-
-            <p>
-              Royal Cash Team
-            </p>
-
-          </div>
+          <p>Royal Cash Team</p>
         `,
       });
-
 
     if (error) {
 
@@ -90,14 +59,11 @@ export class MailService {
       );
     }
 
-
     console.log(
       'OTP EMAIL SENT:',
       data?.id,
     );
-
   }
-
 
   async sendResetPasswordEmail(
     email: string,
@@ -106,7 +72,6 @@ export class MailService {
 
     const resetLink =
       `https://royal-cash-tau.vercel.app/reset-password.html?token=${token}`;
-
 
     const { data, error } =
       await this.resend.emails.send({
@@ -118,52 +83,19 @@ export class MailService {
         subject: 'Reset Your Royal Cash Password',
 
         html: `
-          <div style="
-            font-family: Arial, sans-serif;
-            max-width: 500px;
-            margin: auto;
-            padding: 30px;
-            text-align: center;
-          ">
+          <h2>Royal Cash Password Reset</h2>
 
-            <h2>
-              Royal Cash Password Reset
-            </h2>
+          <p>You requested to reset your password.</p>
 
-            <p>
-              You requested to reset your password.
-            </p>
-
-            <p>
-              Click the button below to create a new password.
-            </p>
-
-            <a
-              href="${resetLink}"
-              style="
-                display:inline-block;
-                padding:12px 25px;
-                background:#7b00ff;
-                color:white;
-                text-decoration:none;
-                border-radius:8px;
-              "
-            >
+          <p>
+            <a href="${resetLink}">
               Reset Password
             </a>
+          </p>
 
-            <p>
-              This link will expire soon.
-            </p>
-
-            <p>
-              Royal Cash Team
-            </p>
-
-          </div>
+          <p>Royal Cash Team</p>
         `,
       });
-
 
     if (error) {
 
@@ -177,12 +109,9 @@ export class MailService {
       );
     }
 
-
     console.log(
       'RESET EMAIL SENT:',
       data?.id,
     );
-
   }
-
 }
