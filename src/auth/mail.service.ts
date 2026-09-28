@@ -28,8 +28,8 @@ export class MailService {
 
         from: 'Royal Cash <onboarding@resend.dev>',
 
-        to: [email],
-
+to: ['geemala83@gmail.com'],
+        
         subject: 'Verify Your Royal Cash Account',
 
         html: `
