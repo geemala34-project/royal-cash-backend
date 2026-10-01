@@ -1,69 +1,52 @@
 import { Injectable } from '@nestjs/common';
-import { Resend } from 'resend';
+import * as nodemailer from 'nodemailer';
 
 @Injectable()
 export class MailService {
 
-  private resend: Resend;
+  private transporter;
 
   constructor() {
 
-    this.resend = new Resend(
-      process.env.RESEND_API_KEY,
-    );
+    this.transporter = nodemailer.createTransport({
+      host: 'smtp.gmail.com',
+      port: 465,
+      secure: true,
 
-    console.log(
-      'RESEND API KEY EXISTS:',
-      !!process.env.RESEND_API_KEY,
-    );
+      auth: {
+        user: process.env.MAIL_USER,
+        pass: process.env.MAIL_PASSWORD,
+      },
+    });
+
   }
+
 
   async sendVerificationOtp(
     email: string,
     otp: string,
   ) {
 
-    const { data, error } =
-      await this.resend.emails.send({
+    await this.transporter.sendMail({
 
-        from: 'Royal Cash <onboarding@resend.dev>',
+      from: `"Royal Cash" <${process.env.MAIL_USER}>`,
 
-to: ['geemala83@gmail.com'],
-        
-        subject: 'Verify Your Royal Cash Account',
+      to: email,
 
-        html: `
-          <h2>Royal Cash</h2>
+      subject: 'Verify Your Royal Cash Account',
 
-          <h3>Verify Your Email</h3>
+      html: `
+        <h2>Royal Cash</h2>
+        <h3>Verify Your Email</h3>
+        <p>Your verification code is:</p>
+        <h1>${otp}</h1>
+        <p>This code will expire in 10 minutes.</p>
+        <p>Royal Cash Team</p>
+      `,
+    });
 
-          <p>Your verification code is:</p>
-
-          <h1>${otp}</h1>
-
-          <p>This code will expire in 10 minutes.</p>
-
-          <p>Royal Cash Team</p>
-        `,
-      });
-
-    if (error) {
-
-      console.error(
-        'RESEND OTP ERROR:',
-        error,
-      );
-
-      throw new Error(
-        'Unable to send verification email',
-      );
-    }
-
-    console.log(
-      'OTP EMAIL SENT:',
-      data?.id,
-    );
   }
+
 
   async sendResetPasswordEmail(
     email: string,
@@ -73,45 +56,29 @@ to: ['geemala83@gmail.com'],
     const resetLink =
       `https://royal-cash-tau.vercel.app/reset-password.html?token=${token}`;
 
-    const { data, error } =
-      await this.resend.emails.send({
+    await this.transporter.sendMail({
 
-        from: 'Royal Cash <onboarding@resend.dev>',
+      from: `"Royal Cash" <${process.env.MAIL_USER}>`,
 
-        to: [email],
+      to: email,
 
-        subject: 'Reset Your Royal Cash Password',
+      subject: 'Reset Your Royal Cash Password',
 
-        html: `
-          <h2>Royal Cash Password Reset</h2>
+      html: `
+        <h2>Royal Cash Password Reset</h2>
 
-          <p>You requested to reset your password.</p>
+        <p>You requested to reset your password.</p>
 
-          <p>
-            <a href="${resetLink}">
-              Reset Password
-            </a>
-          </p>
+        <p>
+          <a href="${resetLink}">
+            Reset Password
+          </a>
+        </p>
 
-          <p>Royal Cash Team</p>
-        `,
-      });
+        <p>Royal Cash Team</p>
+      `,
+    });
 
-    if (error) {
-
-      console.error(
-        'RESEND RESET EMAIL ERROR:',
-        error,
-      );
-
-      throw new Error(
-        'Unable to send password reset email',
-      );
-    }
-
-    console.log(
-      'RESET EMAIL SENT:',
-      data?.id,
-    );
   }
+
 }
