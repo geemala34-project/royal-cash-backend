@@ -8,7 +8,7 @@ async function bootstrap() {
 app.enableCors({
   origin: [
     'http://127.0.0.1:5500',
-    'https://royal-cash-tau.vercel.app'
+    'https://royal-cash-lemon.vercel.app'
   ],
   credentials: true,
 });
