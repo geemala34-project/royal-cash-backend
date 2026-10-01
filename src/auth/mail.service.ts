@@ -54,8 +54,8 @@ export class MailService {
   ) {
 
     const resetLink =
-      `https://royal-cash-tau.vercel.app/reset-password.html?token=${token}`;
-
+`https://royal-cash-lemon.vercel.app/reset-password.html?token=${token}`;
+    
     await this.transporter.sendMail({
 
       from: `"Royal Cash" <${process.env.MAIL_USER}>`,
