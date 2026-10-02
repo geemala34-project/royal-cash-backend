@@ -140,6 +140,12 @@ async verifyOtp(
   );
 
 }
+
+  @Post('resend-otp')
+resendOtp(@Body() body: { email: string }) {
+  return this.authService.resendOtp(body.email);
+}
+
   
 @Post('reset-password')
 async resetPassword(
