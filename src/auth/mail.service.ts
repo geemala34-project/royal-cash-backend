@@ -1,3 +1,5 @@
+import { promises as dns } from 'dns';
+
 import { Injectable } from '@nestjs/common';
 import * as nodemailer from 'nodemailer';
 
