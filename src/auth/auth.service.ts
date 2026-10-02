@@ -295,6 +295,47 @@ async verifyOtp(
   };
 
 }
+
+  async resendOtp(email: string) {
+
+  const pendingUser =
+    await this.prisma.pendingVerification.findUnique({
+      where: {
+        email,
+      },
+    });
+
+
+  if (!pendingUser) {
+    throw new Error('No pending verification found for this email');
+  }
+
+
+  const otp =
+    Math.floor(100000 + Math.random() * 900000).toString();
+
+
+  await this.prisma.pendingVerification.update({
+    where: {
+      email,
+    },
+    data: {
+      otp,
+      otpExpiry: new Date(Date.now() + 10 * 60 * 1000),
+    },
+  });
+
+
+  await this.mailService.sendVerificationOtp(email, otp);
+
+
+  return {
+    message: 'OTP resent to your email',
+    email,
+  };
+
+}
+
   
 async forgotPassword(email: string) {
 
