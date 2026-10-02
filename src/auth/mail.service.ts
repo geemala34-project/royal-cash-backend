@@ -1,17 +1,19 @@
+
+   import { Injectable, OnModuleInit } from '@nestjs/common';
+import * as nodemailer from 'nodemailer';
 import { promises as dns } from 'dns';
 
-import { Injectable } from '@nestjs/common';
-import * as nodemailer from 'nodemailer';
-
 @Injectable()
-export class MailService {
+export class MailService implements OnModuleInit {
 
-  private transporter;
+  private transporter!: nodemailer.Transporter;
 
-  constructor() {
+  async onModuleInit() {
+    // Railway par IPv6 route nahi — Gmail ka IPv4 address nikal kar direct connect
+    const [gmailIp] = await dns.resolve4('smtp.gmail.com');
 
     this.transporter = nodemailer.createTransport({
-      host: 'smtp.gmail.com',
+      host: gmailIp,
       port: 465,
       secure: true,
 
@@ -19,8 +21,11 @@ export class MailService {
         user: process.env.MAIL_USER,
         pass: process.env.MAIL_PASSWORD,
       },
-    });
 
+      tls: {
+        servername: 'smtp.gmail.com',
+      },
+    });
   }
 
 
@@ -57,7 +62,7 @@ export class MailService {
 
     const resetLink =
 `https://royal-cash-lemon.vercel.app/reset-password.html?token=${token}`;
-    
+
     await this.transporter.sendMail({
 
       from: `"Royal Cash" <${process.env.MAIL_USER}>`,
