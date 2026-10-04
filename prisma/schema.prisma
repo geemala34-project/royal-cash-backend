@@ -24,6 +24,8 @@ model User {
 
   createdAt DateTime @default(now())
 
+activityScore Int @default(0)
+
   subscription Subscription?
 }
 
