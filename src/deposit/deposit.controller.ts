@@ -1,6 +1,6 @@
 import { Controller, Get, Post, Put, Body, Param, UseGuards, Req } from '@nestjs/common';
 import { DepositService } from './deposit.service';
-import { JwtGuard } from '../auth/guards/jwt.guard';
+import { UserGuard } from '../auth/guards/user.guard';
 import { AdminGuard } from '../auth/guards/admin.guard';
 
 @Controller('api/deposits')
@@ -8,13 +8,13 @@ export class DepositController {
   constructor(private depositService: DepositService) {}
 
   @Post()
-  @UseGuards(JwtGuard)
+  @UseGuards(UserGuard)
   createDeposit(@Req() req: any, @Body() body: any) {
     return this.depositService.createDeposit(req.user.id, body);
   }
 
   @Get('mine')
-  @UseGuards(JwtGuard)
+  @UseGuards(UserGuard)
   getMyDeposits(@Req() req: any) {
     return this.depositService.getMyDeposits(req.user.id);
   }
