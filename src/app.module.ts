@@ -6,6 +6,7 @@ import { SubscriptionModule } from './subscription/subscription.module';
 import { TickerModule } from './ticker/ticker.module';
 import { SliderModule } from './slider/slider.module';
 import { OfferModule } from './offer/offer.module';
+import { PaymentMethodModule } from './payment-method/payment-method.module';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { OfferModule } from './offer/offer.module';
     TickerModule,
     SliderModule,
     OfferModule,
+PaymentMethodModule,
 
   ],
 })
