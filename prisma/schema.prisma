@@ -9,50 +9,87 @@ datasource db {
 
 model User {
   id Int @id @default(autoincrement())
-
   name String
-
   email String @unique
-
   password String?
-
   googleId String? @unique
-
   resetToken String?
-
   resetTokenExpiry DateTime?
-
   createdAt DateTime @default(now())
-
-activityScore Int @default(0)
-
+  activityScore Int @default(0)
+  role String @default("user")
   subscription Subscription?
+  deposits DepositRequest[]
+  notifications Notification[]
 }
 
 model PendingVerification {
-
   id Int @id @default(autoincrement())
-
   name String
-
   email String @unique
-
   password String
-
   otp String
-
   otpExpiry DateTime
-
   createdAt DateTime @default(now())
-
 }
 
 model Subscription {
   id Int @id @default(autoincrement())
-
   userId Int @unique
-
   subscribedAt DateTime @default(now())
-
   user User @relation(fields: [userId], references: [id])
+}
+
+model PaymentMethod {
+  id Int @id @default(autoincrement())
+  name String
+  details String
+  icon String?
+  isActive Boolean @default(true)
+  sortOrder Int @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deposits DepositRequest[]
+}
+
+model DepositRequest {
+  id Int @id @default(autoincrement())
+  userId Int
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  paymentMethodId Int
+  paymentMethod PaymentMethod @relation(fields: [paymentMethodId], references: [id])
+  amount Float
+  txnId String
+  screenshotUrl String?
+  status String @default("pending")
+  adminNote String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Offer {
+  id Int @id @default(autoincrement())
+  title String
+  text String?
+  imageUrl String?
+  isActive Boolean @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Notification {
+  id Int @id @default(autoincrement())
+  userId Int
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  title String
+  message String
+  isRead Boolean @default(false)
+  createdAt DateTime @default(now())
+}
+
+model Ticker {
+  id Int @id @default(autoincrement())
+  slot String @unique
+  text String
+  updatedAt DateTime @updatedAt
 }
