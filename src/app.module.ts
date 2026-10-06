@@ -7,6 +7,7 @@ import { TickerModule } from './ticker/ticker.module';
 import { SliderModule } from './slider/slider.module';
 import { OfferModule } from './offer/offer.module';
 import { PaymentMethodModule } from './payment-method/payment-method.module';
+import { DepositModule } from './deposit/deposit.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { PaymentMethodModule } from './payment-method/payment-method.module';
     SliderModule,
     OfferModule,
 PaymentMethodModule,
+DepositModule,
 
   ],
 })
