@@ -26,7 +26,15 @@ model User {
 
 activityScore Int @default(0)
 
+  role String @default("user")
+
+  walletBalance Decimal @default(0)
+
   subscription Subscription?
+
+  depositRequests DepositRequest[]
+
+  notifications Notification[]
 }
 
 model PendingVerification {
@@ -55,4 +63,98 @@ model Subscription {
   subscribedAt DateTime @default(now())
 
   user User @relation(fields: [userId], references: [id])
+}
+
+model PaymentMethod {
+  id String @id @default(cuid())
+
+  name String
+
+  details String
+
+  isActive Boolean @default(true)
+
+  createdAt DateTime @default(now())
+
+  depositRequests DepositRequest[]
+}
+
+model DepositRequest {
+  id String @id @default(cuid())
+
+  userId Int
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  paymentMethodId String
+
+  paymentMethod PaymentMethod @relation(fields: [paymentMethodId], references: [id])
+
+  amount Decimal
+
+  transactionId String
+
+  screenshotUrl String
+
+  status String @default("pending")
+
+  createdAt DateTime @default(now())
+}
+
+model Offer {
+  id String @id @default(cuid())
+
+  type String @default("text")
+
+  content String?
+
+  imageUrl String?
+
+  isActive Boolean @default(true)
+
+  createdAt DateTime @default(now())
+}
+
+model Notification {
+  id String @id @default(cuid())
+
+  userId Int?
+
+  user User? @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  title String
+
+  message String
+
+  isRead Boolean @default(false)
+
+  createdAt DateTime @default(now())
+}
+
+model Ticker {
+  id String @id @default(cuid())
+
+  position String @unique
+
+  content String @default("")
+
+  isActive Boolean @default(true)
+
+  updatedAt DateTime @updatedAt
+}
+
+model Slider {
+  id String @id @default(cuid())
+
+  imageUrl String
+
+  linkUrl String?
+
+  title String?
+
+  sortOrder Int @default(0)
+
+  isActive Boolean @default(true)
+
+  createdAt DateTime @default(now())
 }
