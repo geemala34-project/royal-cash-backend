@@ -5,6 +5,7 @@ import { PrismaModule } from './prisma/prisma.module';
 import { SubscriptionModule } from './subscription/subscription.module';
 import { TickerModule } from './ticker/ticker.module';
 import { SliderModule } from './slider/slider.module';
+import { OfferModule } from './offer/offer.module';
 
 @Module({
   imports: [
@@ -17,6 +18,8 @@ import { SliderModule } from './slider/slider.module';
     SubscriptionModule,
     TickerModule,
     SliderModule,
+    OfferModule,
+
   ],
 })
 export class AppModule {}
