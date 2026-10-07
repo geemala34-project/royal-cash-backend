@@ -41,4 +41,19 @@ export class AdminService {
       totalDeposited: sum._sum.amount || 0,
     };
   }
+
+  async updateProfile(userId: number, data: { name?: string; email?: string }) {
+    if (data.email) {
+      const exists = await this.prisma.user.findUnique({ where: { email: data.email } });
+      if (exists && exists.id !== userId) throw new Error('Email already in use');
+    }
+    return this.prisma.user.update({
+      where: { id: userId },
+      data: {
+        ...(data.name ? { name: data.name } : {}),
+        ...(data.email ? { email: data.email } : {}),
+      },
+      select: { id: true, name: true, email: true, role: true },
+    });
+  }
 }
