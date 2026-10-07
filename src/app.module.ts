@@ -9,6 +9,7 @@ import { OfferModule } from './offer/offer.module';
 import { PaymentMethodModule } from './payment-method/payment-method.module';
 import { DepositModule } from './deposit/deposit.module';
 import { NotificationModule } from './notification/notification.module';
+import { AdminModule } from './admin/admin.module';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { NotificationModule } from './notification/notification.module';
 PaymentMethodModule,
 DepositModule,
 NotificationModule,
+AdminModule,
 
   ],
 })
