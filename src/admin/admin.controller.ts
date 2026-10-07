@@ -1,4 +1,4 @@
-import { Controller, Get, UseGuards } from '@nestjs/common';
+import { Controller, Get, Put, Body, Req, UseGuards } from '@nestjs/common';
 import { AdminService } from './admin.service';
 import { AdminGuard } from '../auth/guards/admin.guard';
 
@@ -17,5 +17,10 @@ export class AdminController {
   getStats() {
     return this.adminService.getStats();
   }
-}
 
+  @Put('profile')
+  @UseGuards(AdminGuard)
+  updateProfile(@Req() req: any, @Body() body: { name?: string; email?: string }) {
+    return this.adminService.updateProfile(req.user.id, body);
+  }
+}
