@@ -10,6 +10,7 @@ import { PaymentMethodModule } from './payment-method/payment-method.module';
 import { DepositModule } from './deposit/deposit.module';
 import { NotificationModule } from './notification/notification.module';
 import { AdminModule } from './admin/admin.module';
+import { PushModule } from './push/push.module';
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ PaymentMethodModule,
 DepositModule,
 NotificationModule,
 AdminModule,
+PushModule,
 
   ],
 })
