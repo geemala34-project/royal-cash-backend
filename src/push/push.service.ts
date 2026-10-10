@@ -5,19 +5,24 @@ import * as webpush from 'web-push';
 @Injectable()
 export class PushService {
   constructor(private prisma: PrismaService) {
-    webpush.setVapidDetails(
-      process.env.VAPID_SUBJECT || 'mailto:support.royalcash@gmail.com',
-      process.env.VAPID_PUBLIC_KEY || '',
-      process.env.VAPID_PRIVATE_KEY || '',
-    );
+    try {
+      if (process.env.VAPID_PUBLIC_KEY && process.env.VAPID_PRIVATE_KEY) {
+        webpush.setVapidDetails(
+          process.env.VAPID_SUBJECT || 'mailto:support.royalcash@gmail.com',
+          process.env.VAPID_PUBLIC_KEY,
+          process.env.VAPID_PRIVATE_KEY,
+        );
+      }
+    } catch (e) { console.log('VAPID setup skipped:', e.message); }
   }
 
-  async subscribe(userId: string | null, subscription: any) {
+  async subscribe(userId: string | number | null, subscription: any) {
     const endpoint = subscription.endpoint;
+    const uid = userId != null ? String(userId) : null;
     return this.prisma.pushSubscription.upsert({
       where: { endpoint },
-      update: { subscription: JSON.stringify(subscription), userId },
-      create: { endpoint, subscription: JSON.stringify(subscription), userId },
+      update: { subscription: JSON.stringify(subscription), userId: uid },
+      create: { endpoint, subscription: JSON.stringify(subscription), userId: uid },
     });
   }
 
