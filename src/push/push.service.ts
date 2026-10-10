@@ -29,7 +29,7 @@ export class PushService {
       try {
         await webpush.sendNotification(JSON.parse(s.subscription), payload);
         sent++;
-      } catch (e) {
+      } catch (e: any) {
         // Remove dead subscriptions (410/404)
         if (e.statusCode === 410 || e.statusCode === 404) {
           await this.prisma.pushSubscription.delete({ where: { id: s.id } }).catch(() => {});
