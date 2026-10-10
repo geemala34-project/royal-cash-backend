@@ -13,7 +13,7 @@ export class PushService {
           process.env.VAPID_PRIVATE_KEY,
         );
       }
-    } catch (e) { console.log('VAPID setup skipped:', e.message); }
+    } catch (e: any) { console.log('VAPID setup skipped:', e.message); }
   }
 
   async subscribe(userId: string | number | null, subscription: any) {
