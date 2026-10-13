@@ -11,6 +11,7 @@ import { DepositModule } from './deposit/deposit.module';
 import { NotificationModule } from './notification/notification.module';
 import { AdminModule } from './admin/admin.module';
 import { PushModule } from './push/push.module';
+import { GameModule } from './game/game.module';
 
 @Module({
   imports: [
@@ -29,7 +30,7 @@ DepositModule,
 NotificationModule,
 AdminModule,
 PushModule,
-
+ GameModule,
   ],
 })
 export class AppModule {}
