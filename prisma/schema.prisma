@@ -170,3 +170,25 @@ model PushSubscription {
 
   createdAt DateTime @default(now())
 }
+
+model Game {
+  id        String   @id @default(cuid())
+
+  name      String
+
+  imageUrl  String
+
+  linkUrl   String
+
+  bonus     String   @default("")
+
+  category  String   @default("most_played")
+
+  isActive  Boolean  @default(true)
+
+  sortOrder Int      @default(0)
+
+  createdAt DateTime @default(now())
+
+}
+
